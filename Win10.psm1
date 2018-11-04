@@ -2453,6 +2453,17 @@ Function EnableF1HelpKey {
 	Remove-Item "HKCU:\Software\Classes\TypeLib\{8cec5860-07a1-11d9-b15e-000d56bfe6ee}\1.0\0" -Recurse -ErrorAction SilentlyContinue
 }
 
+# Map Caps Lock to Esc
+function MapCapsToEsc {
+	Write-Host "Mapping Caps Lock to Esc..."
+	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Keyboard Layout" -Name "Scancode Map" -Type Binary -Value ([byte[]](0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x02,0x00,0x00,0x00,0x01,0x00,0x3a,0x00,0x00,0x00,0x00,0x00))
+}
+
+function UnmapCaps {
+	Write-Host "Unmapping Caps Lock..."
+	Remove-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Keyboard Layout" -Name "Scancode Map" -ErrorAction SilentlyContinue
+}
+
 ##########
 #endregion UI Tweaks
 ##########
